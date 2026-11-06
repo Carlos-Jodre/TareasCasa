@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Cada casa vive bajo un código largo y aleatorio. No se puede listar
+    // «casas»: solo entra quien conoce el código.
+    match /casas/{casaId} {
+      allow get, create: if true;
+      allow list, update, delete: if false;
+      match /{col}/{id} {
+        allow read, write: if true;
+      }
+    }
+  }
+}
